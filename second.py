@@ -266,3 +266,26 @@ for index in range(len(df)):
     for words in r.split():
         words1 = [w1 for w1 in words if not w1 in stopwords.words("english")]
         print(words1)"""
+        
+#Example
+print("normalizing values")
+ranger = interp1d([1,512],[1,10])
+print(ranger(256))
+
+print("Bag of Words for the first two essay's for 50 features")
+vectorizer = CountVectorizer(analyzer = "word",   \
+                             tokenizer = None,    \
+                             preprocessor = None, \
+                             stop_words = None,   \
+                             max_features = 50)
+r=df.essay[0]
+r1=df.essay[1]
+asp = []
+asp.append(r)
+asp.append(r1)
+train_data_features = vectorizer.fit_transform(asp)
+train_data_features = train_data_features.toarray()
+print train_data_features.shape
+vocab=0
+vocab = vectorizer.get_feature_names()                           
+print vocab
