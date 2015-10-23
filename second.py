@@ -5,6 +5,13 @@ Created on Sat Oct 03 19:53:11 2015
 @author: ANISH
 """
 from __future__ import division
+#from nltk.corpus import stopwords 
+from textstat.textstat import textstat
+"""from openpyxl import load_workbook
+ws=load_workbook("MyTester.xlsx")
+print(ws.get_sheet_names())"""
+#import enchant
+from collections import Counter
 import pandas as pd
 import nltk
 from nltk.corpus import wordnet as wn
@@ -203,7 +210,7 @@ print(z)
 p1=0
 nouns=0
 downcased=0
-print("Trying grammer for a text")
+"""print("Trying grammer for a text")
 for index in range(len(df)):
      p=df.essay[index]
      p1=nltk.word_tokenize(p)
@@ -219,5 +226,43 @@ for index in range(len(df)):
      #except ValueError:
              #print('Ignoring: malformed line: "{}"'.format(word))
              #print('Ignoring: malformed line: "{}"'.format(pos))
-     print(downcased)
+     print(downcased)"""
 
+#print("Number of spelling mistakes in each essay")
+"""g=enchant.Dict("en_US")
+for index in range(len(df)):
+    g1=0
+    r=df.essay[index]
+    for word in r.split():
+        if g.check(word)== 1:
+            g1=g1+1
+    print(g1)
+    print("")"""
+    
+#all={1: 'CC', 2: 'CD', 3: 'DT', 4: 'EX', 5: 'FW', 6: 'IN', 7: 'JJ', 8: 'JJR', 9: 'JJS', 10: 'LS', 11: 'MD', 12: 'NN', 13: 'NNS', 14: 'NNP', 15: 'NNPS', 16: 'PDT', 17: 'POS', 18: 'PRP', 19: 'PRP$', 20: 'RB', 21: 'RBR', 22: 'RBS', 23: 'RP', 24: 'SYM', 25: 'TO', 26: 'UH', 27: 'VB', 28: 'VBD', 29: 'VBG', 30: 'VBN', 31: 'VBP', 32: 'VBZ', 33: 'WDT', 34: 'WP', 35: 'WP$', 36: 'WRB', 'NN': 12, 'FW': 5, 'PRP': 18, 'RB': 20, 'NNS': 13, 'NNP': 14, 'PRP$': 19, 'WRB': 36, 'CC': 1, 'PDT': 16, 'VBN': 30, 'WP$': 35, 'JJS': 9, 'JJR': 8, 'SYM': 24, 'VBP': 31, 'WDT': 33, 'JJ': 7, 'VBG': 29, 'WP': 34, 'VBZ': 32, 'DT': 3, 'POS': 17, 'TO': 25, 'LS': 10, 'VB': 27, 'RBS': 22, 'RBR': 21, 'EX': 4, 'IN': 6, 'RP': 23, 'CD': 2, 'VBD': 28, 'MD': 11, 'NNPS': 15, 'UH': 26,  '.':37 , 37:'.' , ':':38, 38:':','-NONE-':39,39:'-NONE-' , ',':40, 40:','}
+#ui=[]
+print("grammer for the essay's")
+for index in range(len(df)):
+     p=df.essay[index]
+     p1=nltk.word_tokenize(p.lower())
+     p2=nltk.pos_tag(p1)
+     counts=Counter(tag for p1,tag in p2)
+     print(counts)
+     total = sum(counts.values())
+     print(dict((word, float(count)/total) for word,count in counts.items()))
+     print("")
+print("readability/complexity")     
+for index in range(len(df)):
+    r=df.essay[index]
+    print(textstat.syllable_count(r))    
+    print(textstat.readability_consensus(r))
+    print("")
+    #print(textstat.flesch_reading_ease(r))
+    #print(textstat.flesch_kincaid_grade(r))
+    
+    
+"""for index in range(len(df)):
+    r=df.essay[index]     
+    for words in r.split():
+        words1 = [w1 for w1 in words if not w1 in stopwords.words("english")]
+        print(words1)"""
